@@ -22,8 +22,8 @@ def _choose_winner(ti): # the task interface that allows you to pull
     ])
     winner = max(results) # choose winning roll
     if (winner > 4):
-        return 'JACKPOT!!'
-    return 'NORMAL WIN'
+        return 'jackpot'
+    return 'normal'
 
     
 with DAG("DICE_ROLL_DAG", 
@@ -50,4 +50,14 @@ with DAG("DICE_ROLL_DAG",
         choose_best_model = BranchPythonOperator( # wrapper for an if else situation
             task_id="choose_winner",
             python_callable=_choose_winner
+        )
+        
+        jackpot = BashOperator(
+            task_id="jackpot",
+            bash_command="echo 'JACKPOT!!'"
+        )
+
+        normal = BashOperator(
+            task_id="normal",
+            bash_command="echo 'NORMAL WIN'"
         )
