@@ -24,3 +24,30 @@ def _choose_winner(ti): # the task interface that allows you to pull
     if (winner > 4):
         return 'JACKPOT!!'
     return 'NORMAL WIN'
+
+    
+with DAG("DICE_ROLL_DAG", 
+         start_date=datetime(2021, 6, 1), # initial trigger
+         schedule_interval="@daily", # how often it will run. Setup using a cron string
+         catchup=False #
+            ) as dag:
+
+        player_A = PythonOperator( # operator wrapper for python functions
+            task_id="player_A",
+            python_callable=_roll_dice
+        )
+
+        player_B = PythonOperator(
+            task_id="player_B",
+            python_callable=_roll_dice
+        )
+
+        player_C = PythonOperator(
+            task_id="player_C",
+            python_callable=_roll_dice
+        )
+
+        choose_best_model = BranchPythonOperator( # wrapper for an if else situation
+            task_id="choose_winner",
+            python_callable=_choose_winner
+        )
