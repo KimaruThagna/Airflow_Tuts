@@ -54,13 +54,27 @@ with DAG("DICE_ROLL_DAG",
         
         jackpot = BashOperator(
             task_id="jackpot",
-            bash_command="echo 'JACKPOT!!'"
+            bash_command="echo 'JACKPOT!!>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'"
         )
 
         normal = BashOperator(
             task_id="normal",
-            bash_command="echo 'NORMAL WIN'"
+            bash_command="echo 'NORMAL WIN/////////////////////////////////////'"
         )
         # setup dependendcy order
         # grouped tasks are in a list
         [player_A, player_B, player_C] >> choose_winner >> [jackpot,normal]
+        
+'''
+
+
+ several_similar_dag_tasks_to_execute_in_parallel = [
+        PythonOperator(
+            task_id=f"task_{id}",
+            python_callable=_process_task,
+            op_kwargs={
+                "id": task_id
+            }
+        ) for task_id in ['A', 'B', 'C']
+    ]
+'''
