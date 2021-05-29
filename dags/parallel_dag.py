@@ -25,7 +25,7 @@ def demo_python_task():
     print("Demo using decorators")
     
     
-with DAG("DICE_ROLL_DAG",
+with DAG("PARALLEL_TASK_GROUP",
          schedule_interval="@daily",
          catchup=False, 
          default_args=default_args,
@@ -61,10 +61,8 @@ with DAG("DICE_ROLL_DAG",
             bash_command='sleep 3 && echo "slept within group {{ group_id}} at {{ task_id }}"'
             )
      
-    task_final = BashOperator(
-        task_id = "task_final",
-        bash_command='sleep 3 && echo "slept at {{ task_id }}"'
-    )   
+    task_final = demo_python_task
+    
     
     
     task_1 >> processing_group >> task_final
