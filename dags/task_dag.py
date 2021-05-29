@@ -1,7 +1,7 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator, BranchPythonOperator
 from airflow.operators.bash import BashOperator
-
+from airflow.utils.trigger_rule import TriggerRule
 from random import randint
 from datetime import datetime, timedelta
 
@@ -81,7 +81,8 @@ def _choose_winner(ti): # the task interface that allows you to pull
     winner = max(results) # choose winning roll
     if (winner > 4):
         return 'jackpot'
-    return 'normal'
+    else:
+        return 'normal'
 
 def jackpot_bash():
     return """
@@ -126,10 +127,19 @@ with DAG("DICE_ROLL_DAG",
             task_id="normal",
             bash_command="echo 'NORMAL WIN/////////////////////////////////////'",
             xcoms_push=False
+            
         )
+        # use this to demonstrate trigger rules for tasks after branch
+        final = BashOperator(
+            task_id="final",
+            bash_command="echo 'END OF GAME'",
+            xcoms_push=False,
+            trigger_rule=TriggerRule.ONE_SUCCESS, # any succeeds
+        )
+         
         # setup dependendcy order
         # grouped tasks are in a list
-        [player_A, player_B, player_C] >> choose_winner >> [jackpot,normal]
+        [player_A, player_B, player_C] >> choose_winner >> [jackpot,normal] >> final
         
 '''
 
