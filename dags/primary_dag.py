@@ -25,6 +25,7 @@ with DAG("PRIMARY_DAG",
          description=" performs data ingestion, triggers secondary dag and later performs analytics",
          default_args=default_args,
             ) as dag:
+    
     ingestion = BashOperator(
         task_id = "task_1",
         bash_command='sleep 3 && echo "DATA INGESTION TASK at {{ task_id }}"'

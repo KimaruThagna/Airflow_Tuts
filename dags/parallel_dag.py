@@ -30,12 +30,12 @@ with DAG("PARALLEL_TASK_GROUP",
          catchup=False, 
          default_args=default_args,
             ) as dag:
-    # create a task group where tasks will be grouped executed
+    
     task_1 = BashOperator(
         task_id = "task_1",
         bash_command='sleep 3 && echo "slept at {{ task_id }}"'
     )
-    
+    # create a task group where tasks will be grouped executed
     with TaskGroup(group_id="processing_group") as processing_group:
         
         with TaskGroup(group_id="process_pool_1") as process_pool_1:
