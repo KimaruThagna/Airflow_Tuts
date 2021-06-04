@@ -18,11 +18,6 @@ default_args = {
     'start_date': days_ago(2)
 }
 
-@task
-def demo_python_task():
-    print("Demo using decorators")
-    return "Demo using decorators"
-    
     
 with DAG("PARALLEL_TASK_GROUP",
          schedule_interval="@daily",
@@ -60,8 +55,7 @@ with DAG("PARALLEL_TASK_GROUP",
             bash_command='sleep 3 && echo "slept within group {{ group_id}} at {{ task_id }}"'
             )
      
-    demo_python_task
     
     
     
-    task_1 >> processing_group >> demo_python_task
+    task_1 >> processing_group 

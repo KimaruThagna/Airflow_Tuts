@@ -1,6 +1,6 @@
 from airflow import DAG
 from airflow.operators.bash import BashOperator
-from airflow.decorators import task
+from airflow.operators.python import PythonOperator
 from airflow.utils.dates import days_ago
 
 from datetime import timedelta
@@ -17,10 +17,10 @@ default_args = {
     'start_date': days_ago(2)
 }
 
-@task
+
 def data_processing_task():
-    print("Demo using decorators")
-    return "Demo using decorators"
+    print("Demo processing task")
+    return "Demo processing task"
     
     
 with DAG("SECONDARY_DAG",
@@ -29,7 +29,12 @@ with DAG("SECONDARY_DAG",
          description=" performs processing and db cleanup",
          default_args=default_args,
             ) as dag:
-    data_processing_task
+    
+    
+    processing_task = PythonOperator(
+            task_id="processing_task",
+            python_callable=data_processing_task
+        )
     
     db_cleanup_task = BashOperator(
         task_id = "task_2",
