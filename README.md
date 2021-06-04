@@ -5,7 +5,7 @@ Learning Apache Airflow for managing ETLs using Docker
 
 Run the curl command `curl -LfO 'https://airflow.apache.org/docs/apache-airflow/stable/docker-compose.yaml'`
 # Initialize Airflow
-Run the docker command `docker-compose airlfow-init`
+Run the docker command `docker-compose up airflow-init`
 
 # Spin up the Project 
 

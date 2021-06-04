@@ -119,21 +119,19 @@ with DAG("DICE_ROLL_DAG",
         jackpot = BashOperator(
             task_id="jackpot",
             bash_command=jackpot_bash,
-            xcom_push=False # dont push return value to xcoms
+            do_xcom_push=True # push return value to xcoms False by default
             
         )
 
         normal = BashOperator(
             task_id="normal",
             bash_command="echo 'NORMAL WIN/////////////////////////////////////'",
-            xcoms_push=False
-            
+            do_xcom_push=False
         )
         # use this to demonstrate trigger rules for tasks after branch
         final = BashOperator(
             task_id="final",
             bash_command="echo 'END OF GAME'",
-            xcoms_push=False,
             trigger_rule=TriggerRule.ONE_SUCCESS, # any succeeds
         )
          

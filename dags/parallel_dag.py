@@ -1,7 +1,7 @@
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.utils.task_group import TaskGroup
-from airflow.operators.python import task
+from airflow.decorators import task
 
 from airflow.utils.dates import days_ago
 
@@ -23,6 +23,7 @@ default_args = {
 @task
 def demo_python_task():
     print("Demo using decorators")
+    return "Demo using decorators"
     
     
 with DAG("PARALLEL_TASK_GROUP",
@@ -61,8 +62,8 @@ with DAG("PARALLEL_TASK_GROUP",
             bash_command='sleep 3 && echo "slept within group {{ group_id}} at {{ task_id }}"'
             )
      
-    task_final = demo_python_task
+    demo_python_task
     
     
     
-    task_1 >> processing_group >> task_final
+    task_1 >> processing_group >> demo_python_task
