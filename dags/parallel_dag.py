@@ -2,11 +2,9 @@ from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.utils.task_group import TaskGroup
 from airflow.decorators import task
-
 from airflow.utils.dates import days_ago
 
-from random import randint
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 
 default_args = {

@@ -1,12 +1,9 @@
 from airflow import DAG
 from airflow.operators.bash import BashOperator
-from airflow.utils.task_group import TaskGroup
-from airflow.operators.python import task
 from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 from airflow.utils.dates import days_ago
 
-from random import randint
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 default_args = {
     'owner': 'airflow',
