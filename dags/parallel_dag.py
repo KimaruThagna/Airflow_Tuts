@@ -33,7 +33,7 @@ with DAG("PARALLEL_TASK_GROUP",
     with TaskGroup(group_id="processing_group") as processing_group:
         
         with TaskGroup(group_id="process_pool_1") as process_pool_1:
-           p1_ task_1 = BashOperator(
+            p1_ task_1 = BashOperator(
             task_id = "p1_task_1", # similar task id but since its in group, it becomes group_id.task_id
             bash_command='sleep 3 && echo "slept within group at {{ task_id }}"'
             )
