@@ -33,25 +33,25 @@ with DAG("PARALLEL_TASK_GROUP",
     with TaskGroup(group_id="processing_group") as processing_group:
         
         with TaskGroup(group_id="process_pool_1") as process_pool_1:
-            task_1 = BashOperator(
-            task_id = "task_1", # similar task id but since its in group, it becomes group_id.task_id
+           p1_ task_1 = BashOperator(
+            task_id = "p1_task_1", # similar task id but since its in group, it becomes group_id.task_id
             bash_command='sleep 3 && echo "slept within group at {{ task_id }}"'
             )
             
-            task_2 = BashOperator(
-            task_id = "task_2",
+           p1_task_2 = BashOperator(
+            task_id = "p1_task_2",
             bash_command='sleep 3 && echo "slept within group {{ group_id}} at {{ task_id }}"'
             )
             
         with TaskGroup(group_id="process_pool_2") as process_pool_2:
             
-            task_1 = BashOperator(
-            task_id = "task_1", # similar task id but since its in group, it becomes group_id.task_id
+            p2_task_1 = BashOperator(
+            task_id = "p2_task_1", # similar task id but since its in group, it becomes group_id.task_id
             bash_command='sleep 3 && echo "slept within group at {{ task_id }}"'
             )
             
-            task_2 = BashOperator(
-            task_id = "task_2",
+            p2_task_2 = BashOperator(
+            task_id = "p2_task_2",
             bash_command='sleep 3 && echo "slept within group {{ group_id}} at {{ task_id }}"'
             )
      

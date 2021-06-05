@@ -42,4 +42,4 @@ with DAG("SECONDARY_DAG",
     )
     
     
-    data_processing_task >> db_cleanup_task
+    processing_task >> db_cleanup_task

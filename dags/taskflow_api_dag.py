@@ -27,6 +27,6 @@ def dag_2_0(): # define dag as function and not context manager
     def store_data(data):
         logging.info(f"Store: {data['usd']} with change {data['change']}")
 
-    store_data(process_data(extract_bitcoin_price()))
+    store_data(process_data(extract_bitcoin_price())) # define dependence and data sharing
 
 dag = dag_2_0()
