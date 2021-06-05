@@ -84,8 +84,7 @@ def _choose_winner(ti): # the task interface that allows you to pull
     else:
         return 'normal'
 
-def jackpot_bash():
-    return """
+jackpot_bash= """
             echo 'JACKPOT!!>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
         """
 
